@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <title>Smart Campus System</title>
+
+    <!-- GOOGLE FONT -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700;900&display=swap" rel="stylesheet">
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>SMART  CAMPUS  SYSTEM</h1>
+
+        <!-- ================================= -->
+        <!-- REGISTER -->
+        <!-- ================================= -->
+
+        <div class="card">
+
+            <h2>Register Student</h2>
+
+            <form action="/register" method="POST">
+
+                <input
+                    type="text"
+                    name="sid"
+                    placeholder="Student ID"
+                    required
+                >
+
+                <input
+                    type="text"
+                    name="name"
+                    placeholder="Student Name"
+                    required
+                >
+
+                <input
+                    type="number"
+                    name="age"
+                    placeholder="Age"
+                    required
+                >
+
+                <input
+                    type="number"
+                    name="marks"
+                    placeholder="Marks"
+                    required
+                >
+
+                <br>
+
+                <button
+                    type="submit"
+                    class="register-btn"
+                >
+
+                    Register
+
+                </button>
+
+            </form>
+
+        </div>
+
+        <!-- ================================= -->
+        <!-- MENU -->
+        <!-- ================================= -->
+
+        <div class="menu">
+
+            <a href="/display">
+                <button>Display Students</button>
+            </a>
+
+            <a href="/sort">
+                <button>Bubble Sort</button>
+            </a>
+
+            <a href="/save">
+                <button>Save Records</button>
+            </a>
+
+            <a href="/load">
+                <button>Load Records</button>
+            </a>
+
+            <a href="/analytics">
+                <button>Analytics</button>
+            </a>
+
+            <a href="/scan">
+                <button>Directory Scan</button>
+            </a>
+
+        </div>
+
+        <!-- ================================= -->
+        <!-- LINEAR SEARCH -->
+        <!-- ================================= -->
+
+        <div class="card">
+
+            <h2>Linear Search</h2>
+
+            <form action="/search" method="POST">
+
+                <input
+                    type="text"
+                    name="search_id"
+                    placeholder="Enter Student ID"
+                    required
+                >
+
+                <button type="submit">
+
+                    Search
+
+                </button>
+
+            </form>
+
+        </div>
+
+        <!-- ================================= -->
+        <!-- BINARY SEARCH -->
+        <!-- ================================= -->
+
+        <div class="card">
+
+            <h2>Binary Search</h2>
+
+            <form action="/binarysearch" method="POST">
+
+                <input
+                    type="text"
+                    name="binary_id"
+                    placeholder="Enter Student ID"
+                    required
+                >
+
+                <button type="submit">
+
+                    Binary Search
+
+                </button>
+
+            </form>
+
+        </div>
+
+        <!-- ================================= -->
+        <!-- FEE -->
+        <!-- ================================= -->
+
+        <div class="card">
+
+            <h2>Fee Calculation</h2>
+
+            <form action="/fee" method="POST">
+
+                <input
+                    type="text"
+                    name="fee_id"
+                    placeholder="Enter Student ID"
+                    required
+                >
+
+                <button type="submit">
+
+                    Calculate Fee
+
+                </button>
+
+            </form>
+
+        </div>
+
+        <!-- ================================= -->
+        <!-- RESULT -->
+        <!-- ================================= -->
+
+        {% if result %}
+
+        <div class="result">
+
+            <h2>Student Found</h2>
+
+            <p>ID : {{ result.ID }}</p>
+
+            <p>Name : {{ result.Name }}</p>
+
+            <p>Marks : {{ result.Marks }}</p>
+
+            <p>Grade : {{ result.Grade }}</p>
+
+        </div>
+
+        {% endif %}
+
+        {% if fee %}
+
+        <div class="result">
+
+            <h2>Fee Details</h2>
+
+            <p>{{ fee }}</p>
+
+        </div>
+
+        {% endif %}
+
+        {% if analytics %}
+
+        <div class="result">
+
+            <h2>Analytics</h2>
+
+            <p>{{ analytics }}</p>
+
+        </div>
+
+        {% endif %}
+
+        {% if files %}
+
+        <div class="result">
+
+            <h2>Directory Files</h2>
+
+            {% for file in files %}
+
+                <p>{{ file }}</p>
+
+            {% endfor %}
+
+        </div>
+
+        {% endif %}
+
+        <!-- ================================= -->
+        <!-- TABLE -->
+        <!-- ================================= -->
+
+        <table>
+
+            <tr>
+
+                <th>ID</th>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Marks</th>
+                <th>Grade</th>
+
+            </tr>
+
+            {% for student in students %}
+
+            <tr>
+
+                <td>{{ student.ID }}</td>
+
+                <td>{{ student.Name }}</td>
+
+                <td>{{ student.Age }}</td>
+
+                <td>{{ student.Marks }}</td>
+
+                <td>{{ student.Grade }}</td>
+
+            </tr>
+
+            {% endfor %}
+
+        </table>
+
+    </div>
+
+</body>
+
+</html>
