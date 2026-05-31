@@ -3,6 +3,9 @@ import csv
 import os
 import numpy as np
 import pandas as pd
+import matplotlib
+matplotlib.use('Agg') 
+import matplotlib.pyplot as plt
 
 app = Flask(__name__)
 
@@ -341,17 +344,13 @@ def scan():
 # =====================================================
 
 @app.route("/analytics")
-
 def analytics():
 
     if len(students) == 0:
 
         return render_template(
-
             "index.html",
-
             students=students
-
         )
 
     df = pd.DataFrame(students)
@@ -364,11 +363,76 @@ def analytics():
 
     lowest = np.min(marks)
 
+    # ==================================
+    # BAR GRAPH
+    # ==================================
+
+    plt.figure(figsize=(8,5))
+
+    plt.bar(
+        df["Name"],
+        df["Marks"]
+    )
+
+    plt.title("Student Marks Comparison")
+
+    plt.xlabel("Students")
+
+    plt.ylabel("Marks")
+
+    plt.savefig("static/bar.png")
+
+    plt.close()
+
+    # ==================================
+    # LINE GRAPH
+    # ==================================
+
+    plt.figure(figsize=(8,5))
+
+    plt.plot(
+        df["Name"],
+        df["Marks"],
+        marker="o"
+    )
+
+    plt.title("Student Performance Trend")
+
+    plt.xlabel("Students")
+
+    plt.ylabel("Marks")
+
+    plt.grid(True)
+
+    plt.savefig("static/line.png")
+
+    plt.close()
+
+    # ==================================
+    # PIE CHART
+    # ==================================
+
+    grade_count = df["Grade"].value_counts()
+
+    plt.figure(figsize=(6,6))
+
+    plt.pie(
+        grade_count,
+        labels=grade_count.index,
+        autopct="%1.1f%%"
+    )
+
+    plt.title("Grade Distribution")
+
+    plt.savefig("static/pie.png")
+
+    plt.close()
+
     analytics_result = (
 
-        f"Average : {average} | "
-        f"Highest : {highest} | "
-        f"Lowest : {lowest}"
+        f"Average Marks : {average:.2f} | "
+        f"Highest Marks : {highest} | "
+        f"Lowest Marks : {lowest}"
 
     )
 
@@ -378,8 +442,9 @@ def analytics():
 
         students=students,
 
-        analytics=analytics_result
+        analytics=analytics_result,
 
+        show_graphs=True
     )
 
 # =====================================================
